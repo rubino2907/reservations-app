@@ -19,4 +19,8 @@ export class ReservationService {
     createReservations(body: Omit<Reservation, 'id'>) {
         return this.http.post<Reservation>('http://127.0.0.1:5000/reservations', body)
     }
+
+    deleteReservations(id: number){
+        return this.http.delete<void>(`http://127.0.0.1:5000/reservations/${id}`)
+    }
 }

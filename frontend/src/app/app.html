@@ -4,6 +4,7 @@
   <p>{{ r.name }}</p>
   <p>{{ r.vehicle }}</p>
   <p>{{ r.date }}</p>
+  <button (click)="remove(r.id)">Delete</button>
 }
 
 <input #nameInput placeholder="Name" />

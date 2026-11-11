@@ -24,4 +24,10 @@ export class App implements OnInit{
       this.reservations.update(list => [...list, created]);
     })
   }
+
+  remove(id: number){
+    this.service.deleteReservations(id).subscribe(() => {
+      this.reservations.update(list => list.filter(r => r.id !== id));
+    })
+  }
 }
