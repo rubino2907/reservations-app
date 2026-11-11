@@ -16,4 +16,7 @@ export class ReservationService {
         return this.http.get<Reservation[]>('http://127.0.0.1:5000/reservations');
     }
     
+    createReservations(body: Omit<Reservation, 'id'>) {
+        return this.http.post<Reservation>('http://127.0.0.1:5000/reservations', body)
+    }
 }

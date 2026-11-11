@@ -18,4 +18,10 @@ export class App implements OnInit{
       this.reservations.set(data)
     })
   }
+
+  add(name: string, vehicle: string, date:string){
+    this.service.createReservations({name, vehicle, date}).subscribe(created => {
+      this.reservations.update(list => [...list, created]);
+    })
+  }
 }

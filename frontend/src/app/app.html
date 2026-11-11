@@ -5,3 +5,9 @@
   <p>{{ r.vehicle }}</p>
   <p>{{ r.date }}</p>
 }
+
+<input #nameInput placeholder="Name" />
+<input #vehicleInput placeholder="Vehicle" />
+<input #dateInput placeholder="Date" type="date" />
+
+<button (click)="add(nameInput.value, vehicleInput.value, dateInput.value)">Add</button>
