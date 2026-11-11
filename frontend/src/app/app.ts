@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ReservationService, Reservation } from './reservation';
 
 @Component({
   imports: [RouterOutlet],
@@ -7,6 +8,14 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
-export class App {
+export class App implements OnInit{
+  private service = inject(ReservationService);
+  reservations = signal<Reservation[]>([])
   protected readonly title = signal('frontend');
+
+  ngOnInit() {
+    this.service.getReservations().subscribe(data => {
+      this.reservations.set(data)
+    })
+  }
 }
