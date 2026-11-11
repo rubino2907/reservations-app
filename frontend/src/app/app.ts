@@ -11,6 +11,7 @@ import { ReservationService, Reservation } from './reservation';
 export class App implements OnInit{
   private service = inject(ReservationService);
   reservations = signal<Reservation[]>([])
+  errorMessage = signal('')
   protected readonly title = signal('frontend');
 
   ngOnInit() {
@@ -20,8 +21,9 @@ export class App implements OnInit{
   }
 
   add(name: string, vehicle: string, date:string){
-    this.service.createReservations({name, vehicle, date}).subscribe(created => {
-      this.reservations.update(list => [...list, created]);
+    this.service.createReservations({name, vehicle, date}).subscribe({
+    next: created => { this.reservations.update(list => [...list, created]); this.errorMessage.set('') },
+    error: err => { this.errorMessage.set(err.error?.error || "Could not reach the server") }
     })
   }
 

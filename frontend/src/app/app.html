@@ -12,3 +12,7 @@
 <input #dateInput placeholder="Date" type="date" />
 
 <button (click)="add(nameInput.value, vehicleInput.value, dateInput.value)">Add</button>
+
+@if (errorMessage()) {
+  <p>{{ errorMessage() }}</p>
+}
