@@ -16,7 +16,14 @@ def get_reservations():
 
 @app.route("/reservations", methods=["POST"])
 def post_reservations():
-    data = request.get_json()
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"error": "Fields cannot be empty"}), 400
+    name = data.get("name")
+    vehicle = data.get("vehicle")
+    date = data.get("date")
+    if not name or not vehicle or not date:
+        return jsonify({"error": "The 3 camps are required"}),400 
     new_reservation = {"id": max((r["id"] for r in reservations), default=0) + 1,"name": data["name"], "vehicle": data["vehicle"], "date": data["date"]}
     reservations.append(new_reservation)
     return jsonify(new_reservation),201
