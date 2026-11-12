@@ -23,4 +23,8 @@ export class ReservationService {
     deleteReservations(id: number){
         return this.http.delete<void>(`http://127.0.0.1:5000/reservations/${id}`)
     }
+
+    updateReservations(id: number, body: Omit<Reservation, 'id'>){
+        return this.http.put<Reservation>(`http://127.0.0.1:5000/reservations/${id}`, body)
+    }
 }

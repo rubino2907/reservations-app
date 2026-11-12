@@ -12,6 +12,7 @@ export class App implements OnInit{
   private service = inject(ReservationService);
   reservations = signal<Reservation[]>([])
   errorMessage = signal('')
+  editingId = signal<number | null>(null);
   protected readonly title = signal('frontend');
 
   ngOnInit() {
@@ -30,6 +31,17 @@ export class App implements OnInit{
   remove(id: number){
     this.service.deleteReservations(id).subscribe(() => {
       this.reservations.update(list => list.filter(r => r.id !== id));
+    })
+  }
+
+  save(id: number, name: string, vehicle: string, date: string) {
+    this.service.updateReservations(id, { name, vehicle, date }).subscribe({
+      next: updated => {
+        this.reservations.update(list => list.map(r => r.id === updated.id ? updated : r));
+        this.editingId.set(null);
+        this.errorMessage.set('');
+      },
+      error: err => { this.errorMessage.set(err.error?.error || "Could not reach the server") }
     })
   }
 }

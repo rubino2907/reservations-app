@@ -1,10 +1,19 @@
 <router-outlet />
 
 @for (r of reservations(); track r.id) {
-  <p>{{ r.name }}</p>
-  <p>{{ r.vehicle }}</p>
-  <p>{{ r.date }}</p>
-  <button (click)="remove(r.id)">Delete</button>
+  @if (editingId() === r.id) {
+    <input #editName [value]="r.name" />
+    <input #editVehicle [value]="r.vehicle" />
+    <input #editDate [value]="r.date" type="date" />
+    <button (click)="save(r.id, editName.value, editVehicle.value, editDate.value)">Save</button>
+    <button (click)="editingId.set(null)">Cancel</button>
+  } @else {
+    <p>{{ r.name }}</p>
+    <p>{{ r.vehicle }}</p>
+    <p>{{ r.date }}</p>
+    <button (click)="editingId.set(r.id)">Edit</button>
+    <button (click)="remove(r.id)">Delete</button>
+  }
 }
 
 <input #nameInput placeholder="Name" />
