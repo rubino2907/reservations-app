@@ -35,3 +35,22 @@ def delete_reservations(reservation_id):
             reservations.remove(reservation)
             return "", 204
     return jsonify(f"No reservation with the id: {reservation_id}"),404
+
+@app.route("/reservations/<int:reservation_id>", methods=["PUT"])
+def update_reservations(reservation_id):
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"error": "Fields cannot be empty"}), 400
+    name = data.get("name")
+    vehicle = data.get("vehicle")
+    date = data.get("date")
+    if not name or not vehicle or not date:
+            return jsonify({"error": "The 3 camps are required"}),400 
+    for reservation in reservations:
+        if reservation["id"] == reservation_id:
+            reservation["name"] = name
+            reservation["vehicle"] = vehicle
+            reservation["date"] = date
+            return jsonify(reservation), 200
+    return jsonify(f"No reservation with the id: {reservation_id}"),404  
+            
