@@ -26,12 +26,25 @@ Data is kept in memory, so it resets when the server restarts.
 |--------|--------------------------|--------------------------|
 | GET    | `/reservations`          | List all reservations    |
 | POST   | `/reservations`          | Create a reservation     |
+| PUT    | `/reservations/<id>`     | Update a reservation     |
 | DELETE | `/reservations/<id>`     | Delete a reservation     |
 
-Example request body for `POST /reservations`:
+`POST` and `PUT` require `name`, `vehicle` and `date`, and return `400` if one is missing.
+`PUT` and `DELETE` return `404` if the id does not exist.
+
+Example request body for `POST` and `PUT`:
 
 ```json
 { "name": "Ana", "vehicle": "BMW", "date": "2026-12-01" }
+```
+
+### Backend tests
+
+With the virtual environment active:
+
+```bash
+cd backend
+pytest
 ```
 
 ## How to run the frontend
@@ -45,3 +58,5 @@ npm start
 ```
 
 The app runs at http://localhost:4200.
+
+You can list, add, edit and delete reservations from the page.
